@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css"></link>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Steem Tag Search</title>
+	<link rel="icon" type="image/x-icon" href="https://steemit.com/favicon.ico">
 
 	<style type="text/css">
 		body {
@@ -40,11 +43,13 @@
 		.article{
 			margin: auto;
 			max-width: 768px;
-			padding-top: 30px;
+			padding: 30px;
 		}
-		.article > p {
-		    padding: 10px 0;
-		}
+
+
+		.content h3:not(:first-child) {
+    		margin-top: 0; 
+    	}
 
 		.input{margin-bottom: 12px;}
 
@@ -87,7 +92,6 @@
 			.media-content .title {max-height: 100px; line-height: 20px; overflow: hidden;}
 
 			nav.level {font-size: 0.75rem; line-height: 0.95rem;}
-
 		}
 	</style>
 </head>

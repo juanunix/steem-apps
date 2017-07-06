@@ -14,10 +14,39 @@
     </div>
   </div>
 </section>
-<section class="article">
-	<h1 class="title is-1">What are featured authors?</h1>
-	<p>@lighteye suggested multitag search. Implemented - along with multi author search.</p>
-	<p>A special thanks to @teambuktu for coming with suggestions for performance improvements, and helping with making the application more mobile friendly. </p>
+<section class="article content">
+	<h1 class="title is-1">What are Selected Authors?</h1>
+	<p>The Selected Authors program seeks to help good Steemian writers that don't have a large audience get more exposure, and help people discover great content from writer that they do not know.</p>
+  <p>Steem Tag Search has seen exponential growth since its inception, and is backed by prominent Steemians such as <a target="_blank" href="https://steemit.com/@papa-pepper">@papa-pepper</a>. The project's vision is to make it easy to discover great content, and it is well on it's way to achieving this. The next logical step now is now to make it easy to discover great content from not just authors you already know, but also authors you have never heard about.</p>
+  <p>Selected Authors' content currently show up whenever Steem Tag Search is unsure of what authors you mean. (<a target="_blank" href="{{url_for('tagsearch')}}?tag=steem+programming&author=">see example</a>), but will be expanded into more places, and more apps, in the future.</p><br>
+  <h3 class="title is-3">How can I nominate Selected Authors?</h3>
+  <p>Deciding on how to determine the quality of writing on a large scale is difficult. A common approach is to base it on popularity, but this method has numerous problems, and makes it difficult for writers that write good content, but don't have a large following. 
+  </p><p>
+    To mitigate this problem, we decided to use a small fee to nominate an author. This is based on the rationale that writers with a small audience generally also have a more engaged audience, so they will be more likely to pay the fee than less engaged fans of writers with a larger following.
+  </p><p>You can nominate any Steemian to become a Selected Author for a given tag by sending 2 STEEM to <a href="https://steemit.com/@nemos">@nemos</a> with a memo following the pattern below. All the proceedings go to the future development, and maintaining of Steemit applications like this one. 
+  </p>
+  <blockquote>TS-Nominate: &lt;author&gt;, &lt;tag&gt;</blockquote>
+  <p>For example, if you want to nominate me because I write such good programming articles, you'd write:</p>
+  <blockquote>TS-Nominate: @kasperfred, programming</blockquote>
+  <p>Currently, all selected authors are ranked equally, but a ranking parameter that is proportional to the amount of vouchers an author has is set to be implemented in the near future. </p><br>
+  <h3 class="title is-3">FAQ</h3>
+  <div><p><b>Can I nominate myself?</b>
+    <br>Yes. You can nominate yourself.
+  </p></div>
+  <br>
+  <div><p><b>Why 2 STEEM?</b>
+    <br>We didn't want economical factors to be limiting. The 2 STEEM are a symbolic gesture that a user likes a Steemian's content, and want to help them gain exposure. Research into marketing has shown that there's a mental barrier for people to pay money for something, but once convinced, it is less important how much. In fact, the Steemit Whitepaper mentions this as well. The small fee is a kind of "likeability test", and to avoid bots.
+  </p></div>
+  <br>
+  <div><p><b>What if the value of STEEM increases?</b>
+    <br>The fee is not definitive. It may change over time as the value of STEEM, and other factors come into play. The overall philosophy of the gesture is what we are setting the fee after. 
+  </p></div>
+  <br>
+  <div><p><b>Can I pay more than 2 STEEM to increase the author's ranking?</b>
+    <br>No. The fee is not driven by economical incentive, but works instead as a meter for how much people like an author's content. Any fee above 2 STEEM will be considered a personal donation to the maintainer of the site.
+  </p></div>
+
+  <br>
 </section>
 </div>
 {% endblock %}

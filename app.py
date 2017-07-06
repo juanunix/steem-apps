@@ -1,8 +1,9 @@
 from steemdata import SteemData
 
-from flask import Flask, url_for, request, render_template, jsonify
+from flask import Flask, url_for, request, render_template, jsonify, redirect
 import re
 import json
+import random
 
 app = Flask(__name__)
 
@@ -11,16 +12,21 @@ app = Flask(__name__)
 # Before: 31-28 = 3s
 # After: <1s
 
-
+## !!IMPORTANT!!
+## Remember to change all the url_for, and redirect them to tagsearch
+## when the index page is made. Also, remember to rename HTML template file
 @app.route("/")
 def index():
+
+	return redirect(url_for("tagsearch", **request.args))
+
+@app.route("/tagsearch")
+def tagsearch():
 	try:
 		authors = re.findall(r"[\w-]+", request.args['author'])
 		tags = re.findall(r"[\w-]+", request.args['tag'])
 	except KeyError:
 		return render_template("index.html")
-
-	
 	
 	if not authors:
 		if tags:
@@ -32,13 +38,17 @@ def index():
 
 				selected_authors = []
 				try:
-					selected_authors.extend(data["all_tags"])
+					for author in data["_all_tags"]:
+						username = author["username"]
+						selected_authors.append(username)
 				except:
 					pass
 
 				for tag in tags:
 					try:
-						selected_authors.extend(data[tag])
+						for author in data[tag]:
+							username = author["username"]
+							selected_authors.append(username)
 					except:
 						pass 
 
@@ -144,11 +154,11 @@ def index():
 		tag=" ".join(tags))
 
 
-@app.route("/selected-authors")
+@app.route("/tagsearch/selected-authors")
 def selected_authors():
 	return render_template("selected_authors.html")
 
-@app.route("/changelog")
+@app.route("/tagsearch/changelog")
 def whats_new():
 	return render_template("whats_new.html")
 
