@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+		<div class="column">
+			<section class="hero is-primary">
+			  <div class="hero-body">
+			    <div class="container">
+			      <h1 class="title">
+			        <a href="{{url_for('index')}}">Steemit Tag Search</a>
+			      </h1>
+			      <h2 class="subtitle">
+			        <a href="{{url_for('whats_new')}}">What's new?</a>
+			      </h2>
+			    </div>
+			  </div>
+			</section>
+			<section class="section">
+			<div class="container">
+			    <form action="." method="GET">
+				    <p>Authors:</p><input placeholder="Your favorite Steemians go here" class="input" type="text" name="author" value="{{author}}">
+				    <p>Tags:</p><input placeholder="Try leaving me blank" class="input" type="text" name="tag"  value="{{tag}}">
+			        <button id="submit-button" class="button is-primary" type="submit" value="Search">Search</button>
+			    </form>
+
+			  {% if notification %}
+			  <div id="notification">
+			  	<hr> 
+			  	<div class="notification {{ notification['class'] }}">
+          	<button id="close-notification-button" class="delete"></button>
+          	{{notification["text"] | safe}}
+          </div> 
+        </div>
+				<script>
+					document.getElementById("close-notification-button").addEventListener("click", function(e){
+						document.getElementById("notification").classList.add("hidden")
+					})
+
+				</script>
+				{% endif %}
+
+			    <form action="." method="GET">
+			    {% if all_author_tags %}
+		        <hr>
+			    	<div class="box">
+			    	<input class="input" type="hidden" name="author" value="{{author}}">
+			    	{% for author_tag in all_author_tags %}
+						<button class="button" type="submit" name="tag" value="{{ author_tag["_id"] }}">{{ author_tag["_id"] }} : {{ author_tag["count"] }}</button>
+						{% endfor %}
+						</div>
+					{% endif %}
+					</form>
+					
+			   
+
+			    {% if posts %}
+			    	<hr>
+
+			    {% if showing_selected_authors %}
+			    <div id="notification" class="notification is-info">
+					  <button class="delete"></button>
+					  Showing results from <a target="_blank" href="{{url_for('selected_authors')}}"><b>Selected Authors.</b></a>
+					  Click <a target="_blank" href="{{url_for('selected_authors')}}">here</a> to learn more.
+					</div>
+					<script>
+					document.getElementById("close-notification-button").addEventListener("click", function(e){
+						document.getElementById("notification").classList.add("hidden")
+					})
+					</script>
+			    {% endif %}
+				    
+				  {% for post in posts %}
+						<div class="box">
+						  <article class="media">
+						  	{% if post.image_url %}
+						    <div class="media-left">
+						      <figure class="image">
+						        <a target="_blank" href="{{post.url}}"><img class="card-image" src="{{post.image_url[0]}}" alt="Image"></a>
+						      </figure>
+						    </div>
+						    {% endif %}
+
+						    <div class="media-content">
+						      <div class="content">
+						        <a target="_blank" href="{{post.url}}"><p class="title">
+						        {{post.title}}
+						        </p></a>
+						      </div>
+						      <nav class="level is-mobile">
+						        <div class="level-left">
+						          <div class="level-item">
+						            <p>Author: <a target="_blank" href="https://steemit.com/@{{post.author}}">{{post.author | title}}</a></p>
+						          </div>
+						          <div class="level-item">
+						            <p>Upvotes: {{post.net_votes}}</p>
+											</div>
+											<div class="level-item">
+						            <p><a target="_blank" href={{post.url}}>Read more on Steemit</a></p>
+											</div>
+						        </div>
+						      </nav>
+						    </div>
+						  </article>
+						</div>
+					{% endfor %}
+					
+				{% endif %}
+			</div>
+			</section>
+		</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column">
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        <a href="{{url_for('index')}}">Steemit Tag Search</a>
+      </h1>
+      <h2 class="subtitle">
+        <a href="{{url_for('selected_authors')}}">Selected Authors</a>
+      </h2>
+    </div>
+  </div>
+</section>
+<section class="article">
+	<h1 class="title is-1">What are featured authors?</h1>
+	<p>@lighteye suggested multitag search. Implemented - along with multi author search.</p>
+	<p>A special thanks to @teambuktu for coming with suggestions for performance improvements, and helping with making the application more mobile friendly. </p>
+</section>
+</div>
+{% endblock %}
