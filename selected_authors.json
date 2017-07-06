@@ -1,6 +1,6 @@
 {
-	"all_tags": [
-		"kasperfred",
-		"papa-pepper"
+	"_all_tags": [
+		{"username" : "kasperfred", "vouchers": 0},
+		{"username" : "papa-pepper", "vouchers": 0}
 	]
 }
