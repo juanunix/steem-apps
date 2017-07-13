@@ -17,10 +17,10 @@
 			</section>
 			<section class="section">
 			<div class="container">
-			    <form action="." method="GET">
+			    <form id="form" action="." method="GET">
 				    <p>Authors:</p><input placeholder="Your favorite Steemians go here" class="input" type="text" name="author" value="{{author}}">
 				    <p>Tags:</p><input placeholder="Try leaving me blank" class="input" type="text" name="tag"  value="{{tag}}">
-			        <button id="submit-button" class="button is-primary" type="submit" value="Search">Search</button>
+			      <button id="submit-button" class="button is-primary" type="submit" value="Search">Search</button>
 			    </form>
 
 			  {% if notification %}
@@ -108,4 +108,27 @@
 			</div>
 			</section>
 		</div>
+		<script>
+		var url = window.location.href
+		var authors = url.match(/author=([\w-%2]+)/)
+		var tags = url.match(/tag=([\w-%2]+)/)
+
+		if (tags || authors){
+			var url = window.location.href
+			var spliceRange = url.indexOf("tagsearch")+"tagsearch".length
+			var apiURL = [url.slice(0,spliceRange), "/api", url.slice(spliceRange)].join('')
+			
+			// create ui button
+			var anchor = document.createElement('a');
+			var anchorText = document.createTextNode("API");
+			anchor.appendChild(anchorText);
+			anchor.setAttribute("href", apiURL);
+			anchor.setAttribute("target", "_blank")
+			anchor.setAttribute("class", "button is-primary");
+
+			// append it to DOM
+			var form = document.getElementById("form")
+			form.appendChild(anchor);
+		}
+		</script>
 {% endblock %}
