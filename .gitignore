@@ -1,4 +1,2 @@
 venv
-passenger_wsgi.py
-Procfile
 .vscode
