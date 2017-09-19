@@ -1,0 +1,124 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="column">
+	<section class="hero is-primary">
+		<div class="hero-body">
+			<div class="container">
+				<h1 class="title">
+					<a href="{{url_for('index')}}">Steem Apps</a> / <a href="{{url_for('tagsearch.index')}}">Steemit Tag Search</a>
+				</h1>
+				<h2 class="subtitle">
+					<a href="{{url_for('tagsearch.whats_new')}}">What's new?</a>
+				</h2>
+			</div>
+		</div>
+	</section>
+	<section class="section">
+		<div class="container">
+			<form id="form" action="." method="GET">
+				<p>Authors:</p><input placeholder="Your favorite Steemians go here" class="input" type="text" name="authors" value="{% for author in response['content']['authors'] %}{{author}} {% endfor %}">
+				<p>Tags:</p><input placeholder="Try leaving me blank" class="input" type="text" name="tags" value="{% for tag in response['content']['tags'] %}{{tag}} {% endfor %}">
+				<button id="submit-button" class="button is-primary" type="submit" value="Search">Search</button>
+			</form>
+
+			{% if response['notification'] %}
+			<div id="notification">
+				<hr>
+				<div class="notification {{ notification['class'] }}">
+					<button id="close-notification-button" class="delete"></button> {{response['notification']["text"] | safe}}
+				</div>
+			</div>
+			<script>
+				document.getElementById("close-notification-button").addEventListener("click", function (e) {
+					document.getElementById("notification").classList.add("hidden")
+				})
+			</script>
+			{% endif %}
+
+
+
+			<form action="." method="GET">
+				{% if response['content']['author_tags'] %}
+				<hr>
+				<div class="box">
+					<input class="input" type="hidden" name="authors" value="{{response['content']['authors']}}"> {% for author_tag in response['content']['author_tags']
+					%}
+					<button class="button" type="submit" name="tags" value="{{author_tag['_id']}}">{{ author_tag["_id"] }} : {{ author_tag["count"] }}</button>					{% endfor %}
+				</div>
+				{% endif %}
+			</form>
+
+
+			{% if response['content']['posts'] %}
+			<hr> {% if response['content']['showing_selected_authors'] %}
+			<div id="notification" class="notification is-info">
+				<button id="close-notification-button" class="delete"></button> Showing results from <a target="_blank" href="{{url_for('tagsearch.selected_authors')}}"><b>Selected Authors.</b></a>				Click <a target="_blank" href="{{url_for('tagsearch.selected_authors')}}">here</a> to learn more.
+			</div>
+			<script>
+				document.getElementById("close-notification-button").addEventListener("click", function (e) {
+					document.getElementById("notification").classList.add("hidden")
+				})
+			</script>
+			{% endif %} {% for post in response['content']['posts'] %}
+			<div class="box">
+				<article class="media">
+					{% if post.image_url %}
+					<div class="media-left">
+						<figure class="image">
+							<a target="_blank" href="{{post.url}}"><img class="card-image" src="{{post.image_url[0]}}" alt="Image"></a>
+						</figure>
+					</div>
+					{% endif %}
+
+					<div class="media-content">
+						<div class="content">
+							<a target="_blank" href="{{post.url}}">
+								<p class="title">
+									{{post.title}}
+								</p>
+							</a>
+						</div>
+						<nav class="level is-mobile">
+							<div class="level-left">
+								<div class="level-item">
+									<p>Author: <a target="_blank" href="https://steemit.com/@{{post.author}}">{{post.author | title}}</a></p>
+								</div>
+								<div class="level-item">
+									<p>Upvotes: {{post.net_votes}}</p>
+								</div>
+								<div class="level-item">
+									<p><a target="_blank" href={{post.url}}>Read more on Steemit</a></p>
+								</div>
+							</div>
+						</nav>
+					</div>
+				</article>
+			</div>
+			{% endfor %} {% endif %}
+		</div>
+	</section>
+</div>
+<script>
+	var url = window.location.href
+	var authors = url.match(/author=([\w-%2]+)/)
+	var tags = url.match(/tag=([\w-%2]+)/)
+
+	if (tags || authors) {
+		var url = window.location.href
+		var spliceRange = url.indexOf("tagsearch") + "tagsearch".length
+		var apiURL = [url.slice(0, spliceRange), "/api", url.slice(spliceRange)].join('')
+
+		// create ui button
+		var anchor = document.createElement('a');
+		var anchorText = document.createTextNode("API");
+		anchor.appendChild(anchorText);
+		anchor.setAttribute("href", apiURL);
+		anchor.setAttribute("target", "_blank")
+		anchor.setAttribute("class", "button is-primary");
+
+		// append it to DOM
+		var form = document.getElementById("form")
+		form.appendChild(anchor);
+	}
+</script>
+{% endblock %}
