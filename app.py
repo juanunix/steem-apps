@@ -5,7 +5,7 @@ app = Flask(__name__)
 # import apps
 from tagsearch.app import tagsearch
 
-# registar apps
+# register apps
 app.register_blueprint(tagsearch, url_prefix="/tagsearch")
 
 
